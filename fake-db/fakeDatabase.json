@@ -1,0 +1,32 @@
+{
+  "akun": [
+    {
+      "email": "jun@gmail.com",
+      "password": "123456789",
+      "username": "jun_whoo",
+      "role": "admin",
+      "id": 1
+    },
+    {
+      "email": "baby@gmail.com",
+      "password": "123456789",
+      "username": "lil_baby",
+      "role": "user",
+      "id": 2
+    },
+    {
+      "email": "bio@gmail.com",
+      "password": "12345",
+      "username": "bio.data",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "email": "birkin@gmail.com",
+      "password": "12345",
+      "username": "birkin_bag",
+      "role": "user",
+      "id": 4
+    }
+  ]
+}
