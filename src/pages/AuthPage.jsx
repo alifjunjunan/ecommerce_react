@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios';
+import { Toast, ToastBody, ToastHeader } from 'reactstrap';
+
+const API_URL = "http://localhost:2000/akun";
 
 class AuthPage extends React.Component {
     constructor(props) {
@@ -9,9 +12,16 @@ class AuthPage extends React.Component {
             password: "",
             konfirPassword: "",
             username: "",
-            role: "",
             loginEmail: "",
             loginPassword: "",
+            logPassShow: "Show",
+            logPassType: "password",
+            regPassShow: "Show",
+            regPassType: "password",
+            toastOpen: false,
+            toastHeader: "",
+            toastmessage: "",
+            toastIcon: "",
             akun: []
          }
     }
@@ -44,20 +54,66 @@ class AuthPage extends React.Component {
     btDaftar = () => {
         let {email,password,konfirPassword,username} = this.state
         
-        password == konfirPassword ? axios.post(`http://localhost:2000/akun`,{email,password,username,role: "user"})
-        .then((response) => {
-            this.getData()
+        // password == konfirPassword ? axios.post(`http://localhost:2000/akun`,{email,password,username,role: "user"})
+        // .then((response) => {
+        //     this.getData()
+        //     this.setState({
+        //         email: "",
+        //         password: "",
+        //         username: "",
+        //         konfirPassword: ""
+        //     })
+        //     alert(`Akun berhasil didaftarkan`)
+        // })
+        // .catch((err) => {
+        //     console.log(err)
+        // }) : alert(`data ada yang salah, silahkan cek kembali`)
+
+        if(username == "" || email == "" || password == "" || konfirPassword == "") {
             this.setState({
-                email: "",
-                password: "",
-                username: "",
-                konfirPassword: ""
+                toastOpen: true,
+                toastHeader: "Register Warning",
+                toastIcon: "warning",
+                toastmessage: "Lengkapi semua data"
             })
-            alert(`Akun berhasil didaftarkan`)
+        } else {
+            if (password == konfirPassword) {
+                if (email.includes("@")) {
+                    axios.post(`http://localhost:2000/akun`,{email,password,username,role: "user",status: "active"})
+                .then((response) => {
+                    this.getData()
+                    this.setState({
+                        email: "",
+                        password: "",
+                        username: "",
+                        konfirPassword: "",
+                        toastOpen: true,
+                        toastHeader: "Register succes",
+                        toastIcon: "success",
+                        toastmessage: "registrasi berhasil"
+                    })
+                    
         })
         .catch((err) => {
             console.log(err)
-        }) : alert(`data ada yang salah, silahkan cek kembali`)
+        })
+                } else {
+                    this.setState({
+                        toastOpen: true,
+                        toastHeader: "Register Warning",
+                        toastIcon: "warning",
+                        toastmessage: "Email Salah"
+                    })
+                }
+            } else {
+                this.setState({
+                    toastOpen: true,
+                    toastHeader: "Register Warning",
+                    toastIcon: "warning",
+                    toastmessage: "Password tidak sesuai"
+                })
+            }
+        }
         
 
     }
@@ -87,13 +143,38 @@ class AuthPage extends React.Component {
             loginPassword: ""
          })
     }
+
+    showHidePasswordLogin = () => {
+        if (this.state.logPassType == "password") {
+            this.setState({
+                logPassShow: "Hide",
+                logPassType: "text"
+            })
+        } else {
+            this.setState({
+                logPassShow: "Show",
+                logPassType: "password"
+            })
+        }
+    }
     
     render() { 
         return ( 
             <div>
                 <div className="container mt-5">
                     <div>
-                        <h2 className="text-center">Pilihan Masuk</h2>
+                    <Toast isOpen={this.state.toastOpen} style={{ position: "fixed" }}>
+                        <ToastHeader icon={this.state.toastIcon} toggle={() => this.setState({toastOpen: false})}>
+                                {this.state.toastHeader}
+                        </ToastHeader>
+                        <ToastBody>
+                                {this.state.toastmessage}
+                        </ToastBody>
+                    </Toast>
+                    </div>
+                    
+                    <div>
+                        <h2 className="text-center font-weight-bold">Pilihan Masuk</h2>
                         <p className="text-center">Masuk dan selesaikan pesanan dengan data pribadi Anda atau daftar untuk menikmati semua manfaat memiliki akun IKEA.</p>
                     </div>
                     <div className="container mt-5">
@@ -106,9 +187,12 @@ class AuthPage extends React.Component {
                                             <label htmlFor="email">Email</label>
                                             <input type="email" className="form-control" onChange={(event) => this.handleInput(event.target.value,"loginEmail")} value={this.state.loginEmail} />
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="password">Password</label>
-                                            <input type="password" className="form-control" onChange={(event) => this.handleInput(event.target.value,"loginPassword")} value={this.state.loginPassword}/>
+                                        <label htmlFor="password">Password</label>
+                                        <div className="input-group">
+                                            <input type={this.state.logPassType} className="form-control" onChange={(event) => this.handleInput(event.target.value,"loginPassword")} value={this.state.loginPassword}/>
+                                            <div className="input-group-append">
+                                                <span className="input-group-text" style={{ cursor: "pointer" }} onClick={this.showHidePasswordLogin}>{this.state.logPassShow}</span>
+                                            </div>
                                         </div>
                                         <div className="form-group mt-3">
                                             <button type="button" className="form-control btn btn-primary btn-block text-center" onClick={this.btLogin}>masuk</button>
