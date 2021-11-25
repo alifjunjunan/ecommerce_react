@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
+import { Button, Input, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Col } from 'reactstrap';
 
 class ModalDetail extends React.Component {
     constructor(props) {
@@ -23,6 +23,42 @@ class ModalDetail extends React.Component {
             })
         }
     }
+
+    printStock = () => {
+        
+        if (this.props.products.stock){
+            return this.props.products.stock.map((item,index) => {
+                return(
+                    <Row>
+                        <Col>
+                            <Input type="text" className="mb-2" defaultValue={item.type} disabled={this.state.modalDisable}/>
+                        </Col>
+                        <Col>
+                            <Input type="text" className="mb-2" defaultValue={item.qty} disabled={this.state.modalDisable}/>
+                        </Col>
+                        <Col>
+                            <Button type="button" className="mb-2" outline>Delete</Button>
+                        </Col>
+                    </Row>
+                )
+            })
+        }
+    }
+
+    printImages = () => {
+        if (this.props.products.images) {
+            return this.props.products.images.map((item,index) => {
+                return (
+                    <Row>
+                        <Col>
+                             <Input type="text" className="mb-2" defaultValue={item} disabled={this.state.modalDisable}/>
+                        </Col>
+                    </Row>
+                )
+            })
+        }
+    }
+
     render() { 
         return ( 
             <Modal isOpen={this.props.modalOpen}>
@@ -59,7 +95,7 @@ class ModalDetail extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label>Stock Product</Label>
-                            <Row>
+                            {/* <Row>
                                 <div className="col">
                                     <Input type="text" className="mb-2" defaultValue={this.props.products.stock[0].type} disabled={this.state.modalDisable}/>
                                     <Input type="text" defaultValue={this.props.products.stock[1].type} disabled={this.state.modalDisable}/>
@@ -72,17 +108,22 @@ class ModalDetail extends React.Component {
                                     <Button type="button" className="mb-2" outline>Delete</Button>
                                     <Button type="button" outline>Delete</Button>
                                 </div>
-                            </Row>
+                            </Row> */}
+                            {this.printStock()}
                         </FormGroup>
-                        <Row>
+                        {/* <Row>
                             <div className="col">
                             <FormGroup>
                                     <Label>Images Product</Label>
                                     <Input type="text" className="mb-2" defaultValue={this.props.products.images[0]} disabled={this.state.modalDisable}/>
                                     <Input type="text" defaultValue={this.props.products.images[1]} disabled={this.state.modalDisable}/>
-                                </FormGroup>
+                            </FormGroup>
                             </div>
-                        </Row>
+                        </Row> */}
+                        <FormGroup>
+                            <Label>Images Product</Label>
+                            {this.printImages()}
+                        </FormGroup>
                    </Form>
                 </ModalBody>
                 <ModalFooter>

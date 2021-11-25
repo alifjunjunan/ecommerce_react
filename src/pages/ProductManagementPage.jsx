@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react'
 import { Button, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
 import ModalDetail from '../components/ModalDetail';
+import { addProductAction } from '../redux/action/productAction';
+import { connect } from 'react-redux';
 
 class ProductManagementPage extends React.Component {
     constructor(props) {
@@ -24,6 +26,8 @@ class ProductManagementPage extends React.Component {
             this.setState({
                 products: response.data
             })
+
+            this.props.addProductAction(response.data[0])
         })
         .catch((err) => {
             console.log(err)
@@ -94,4 +98,4 @@ class ProductManagementPage extends React.Component {
     }
 }
  
-export default ProductManagementPage;
+export default connect(null,{addProductAction}) (ProductManagementPage);

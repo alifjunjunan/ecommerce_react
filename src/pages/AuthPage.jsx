@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
+import { loginAction } from '../redux/action';
+import { connect } from 'react-redux';
 
 const API_URL = "http://localhost:2000/akun";
 
@@ -134,6 +136,8 @@ class AuthPage extends React.Component {
             loginPassword: ""
         })
         alert(`berhasil ! selamat datang ${dataLogin[0].username}`)
+        console.log("response login =>", response.data)
+        this.props.loginAction(response.data[0])
     })
     .catch((err) => {
         console.log(err)
@@ -230,5 +234,7 @@ class AuthPage extends React.Component {
          );
     }
 }
+
+
  
-export default AuthPage;
+export default connect(null,{loginAction}) (AuthPage);

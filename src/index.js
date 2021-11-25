@@ -4,11 +4,17 @@ import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducers } from './redux/reducers';
 
+const globalStore = createStore(rootReducers) //membuat store / penyimpanan terpusat
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={globalStore}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
