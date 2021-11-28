@@ -61,7 +61,7 @@ class ModalDetail extends React.Component {
 
     render() { 
         return ( 
-            <Modal isOpen={this.props.modalOpen}>
+            <Modal isOpen={this.props.modalDetail}>
                 <ModalHeader >
                     Detail Product
                 </ModalHeader>
@@ -95,31 +95,8 @@ class ModalDetail extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label>Stock Product</Label>
-                            {/* <Row>
-                                <div className="col">
-                                    <Input type="text" className="mb-2" defaultValue={this.props.products.stock[0].type} disabled={this.state.modalDisable}/>
-                                    <Input type="text" defaultValue={this.props.products.stock[1].type} disabled={this.state.modalDisable}/>
-                                </div>
-                                <div className="col">
-                                    <Input type="number" className="mb-2" defaultValue={this.props.products.stock[0].qty} disabled={this.state.modalDisable}/>
-                                    <Input type="number" defaultValue={this.props.products.stock[1].qty} disabled={this.state.modalDisable}/>
-                                </div>
-                                <div className="col">
-                                    <Button type="button" className="mb-2" outline>Delete</Button>
-                                    <Button type="button" outline>Delete</Button>
-                                </div>
-                            </Row> */}
                             {this.printStock()}
                         </FormGroup>
-                        {/* <Row>
-                            <div className="col">
-                            <FormGroup>
-                                    <Label>Images Product</Label>
-                                    <Input type="text" className="mb-2" defaultValue={this.props.products.images[0]} disabled={this.state.modalDisable}/>
-                                    <Input type="text" defaultValue={this.props.products.images[1]} disabled={this.state.modalDisable}/>
-                            </FormGroup>
-                            </div>
-                        </Row> */}
                         <FormGroup>
                             <Label>Images Product</Label>
                             {this.printImages()}
@@ -128,7 +105,10 @@ class ModalDetail extends React.Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button type="button" color="primary" onClick={this.btDisableInput}>{this.state.buttonDetail}</Button>
-                    <Button type="button" onClick={this.props.btCancel}>Cancel</Button>
+                    <Button type="button" onClick={() => {
+                        this.setState({modalDisable: true})
+                        this.props.btCancel()
+                         }}>Cancel</Button>
                 </ModalFooter>
             </Modal>
          );

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import { loginAction } from '../redux/action';
 import { connect } from 'react-redux';
+import {Navigate} from 'react-router-dom'
 
 const API_URL = "http://localhost:2000/akun";
 
@@ -135,6 +136,7 @@ class AuthPage extends React.Component {
             loginEmail: "",
             loginPassword: ""
         })
+        localStorage.setItem("data", JSON.stringify(response.data[0]));
         alert(`berhasil ! selamat datang ${dataLogin[0].username}`)
         console.log("response login =>", response.data)
         this.props.loginAction(response.data[0])
@@ -163,6 +165,10 @@ class AuthPage extends React.Component {
     }
     
     render() { 
+        if (this.props.iduser) {
+            // redirect ke page yang dituju
+            return <Navigate to="/"/>
+        }
         return ( 
             <div>
                 <div className="container mt-5">
@@ -235,6 +241,10 @@ class AuthPage extends React.Component {
     }
 }
 
-
+const mapToProps = (state) => {
+    return {
+        iduser: state.userReducer.id
+    }
+}
  
-export default connect(null,{loginAction}) (AuthPage);
+export default connect(mapToProps,{loginAction}) (AuthPage);

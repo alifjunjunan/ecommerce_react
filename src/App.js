@@ -6,12 +6,38 @@ import NavbarComponent from './components/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductManagementPage from './pages/ProductManagementPage';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { loginAction } from './redux/action';
+
+
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {  }
   }
+
+  componentDidMount() {
+    this.keepLogin()
+  }
+
+  keepLogin = () => {
+    let local = JSON.parse(localStorage.getItem("data")) 
+    if (local) {
+      axios.get(`http://localhost:2000/akun?email=${local.email}&password=${local.password}`)
+      .then((respon) => {
+        console.log("keepLogin berhasil ==>", respon.data)
+        this.props.loginAction(respon.data[0])
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    }
+  }
+
   render() { 
     return ( 
       <div>
@@ -26,4 +52,4 @@ class App extends React.Component {
   }
 }
  
-export default App;
+export default connect(null,{loginAction}) (App);

@@ -4,13 +4,17 @@ import { Button, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row, Tab
 import ModalDetail from '../components/ModalDetail';
 import { addProductAction } from '../redux/action/productAction';
 import { connect } from 'react-redux';
+import ModalAdd from '../components/ModalAdd';
+
+const API_URL = "http://localhost:2000"
 
 class ProductManagementPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
             products: [],
-            modalOpen: false,
+            modalDetail: false,
+            modalAdd: false,
             selectedIdx: null
 
          }
@@ -26,7 +30,7 @@ class ProductManagementPage extends React.Component {
             this.setState({
                 products: response.data
             })
-
+            
             this.props.addProductAction(response.data[0])
         })
         .catch((err) => {
@@ -37,9 +41,10 @@ class ProductManagementPage extends React.Component {
     btDetail = (idx) => {
         this.setState({
             selectedIdx: idx,
-            modalOpen: true,
+            modalDetail: true,
         })
     }
+
 
     printData = () => {
 
@@ -52,11 +57,23 @@ class ProductManagementPage extends React.Component {
                     <td>{item.kategori}</td>
                     <td><img src={item.images[0]} width="100px" height="100px" alt="product" /></td>
                     <td>{item.harga}</td>
-                    <td><Button type="button" color="info" style={{ color: "white" }} onClick={() => this.btDetail(index)} >Detail</Button> <Button type="button" color="danger">Delete</Button></td>
+                    <td><Button type="button" color="info" style={{ color: "white" }} onClick={() => this.btDetail(index)} >Detail</Button> <Button type="button" color="danger" onClick={() => this.btDeleteProduct(index)}>Delete</Button></td>
                 </tr>
             )
         })
 
+    }
+
+    btDeleteProduct = (idx) => {
+        let {products} = this.state
+
+        axios.delete(`${API_URL}/products/${products[idx].id}`)
+        .then((response) => {
+            this.getData()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     
@@ -66,6 +83,14 @@ class ProductManagementPage extends React.Component {
             <Container className="mt-2">
                 <h2 className="text-center" style={{ fontWeight: "bold" }}>Product Management</h2>
                 <hr />
+                <div className="d-flex justify-content-end">
+                    <Button type="button" color="success" onClick={() => this.setState({modalAdd: true})}>Add</Button>
+                </div>
+                <ModalAdd
+                    
+                    modalAdd={this.state.modalAdd}
+                    btClose={() => this.setState({ modalAdd: !this.state.modalAdd})}
+                />
                 <Row className="mt-4">
                     <Table>
                         <thead className="thead-dark">
@@ -89,13 +114,15 @@ class ProductManagementPage extends React.Component {
                     <ModalDetail
                         btDetail={this.btDetail}
                         products={this.state.products[this.state.selectedIdx]}
-                        modalOpen={this.state.modalOpen}
-                        btCancel={() => this.setState({selectedIdx: null})}
+                        modalDetail={this.state.modalDetail}
+                        btCancel={() => this.setState({modalDetail: !this.state.modalDetail})}
                     /> : null
                 }
+                
             </Container>
          );
     }
 }
+
  
 export default connect(null,{addProductAction}) (ProductManagementPage);

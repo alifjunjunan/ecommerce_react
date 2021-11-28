@@ -48,8 +48,8 @@
       "status": "active",
       "id": 6
     }
-  ], 
-  "products" : [
+  ],
+  "products": [
     {
       "nama": "IDALINNEA D",
       "deskripsi": " Ritsleting yang tersembunyi membuat sarung mudah dilepas.  Sarung bantal dengan tampilan cermin karena memiliki pola yang sama di kedua sisi.  Katun adalah bahan alami lembut dan mudah dirawat yang dapat Anda cuci dengan mesin.",
@@ -73,6 +73,34 @@
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810719_PE771386_S4.jpg"
       ],
       "id": 1
+    },
+    {
+      "nama": "KAOS UNIQLO X KAWS",
+      "deskripsi": "Kaos premium",
+      "kategori": "Kaos",
+      "brand": "Uniqlo",
+      "harga": "200000",
+      "stock": [
+        {
+          "id": null,
+          "type": "M",
+          "qty": "5"
+        },
+        {
+          "id": null,
+          "type": "L",
+          "qty": "4"
+        },
+        {
+          "id": null,
+          "type": "Xl",
+          "qty": "2"
+        }
+      ],
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_tinKQVRUbIflUjduaDjKpeZbipvxICvFYQ&usqp=CAU"
+      ],
+      "id": 2
     }
   ]
 }
