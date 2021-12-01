@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React from 'react'
-import { Button, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
+import { Button, ButtonGroup, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
 import ModalDetail from '../components/ModalDetail';
-import { addProductAction } from '../redux/action/productAction';
+import { getProductAction } from '../redux/action/productAction';
 import { connect } from 'react-redux';
 import ModalAdd from '../components/ModalAdd';
+import { API_URL } from '../helper';
 
-const API_URL = "http://localhost:2000"
+
+
 
 class ProductManagementPage extends React.Component {
     constructor(props) {
@@ -15,13 +17,16 @@ class ProductManagementPage extends React.Component {
             products: [],
             modalDetail: false,
             modalAdd: false,
-            selectedIdx: null
+            selectedIdx: null,
+            thumnailIdx: 0,
+            page: 1
 
          }
     }
 
     componentDidMount = () => {
         this.getData()
+       
     }
 
     getData = () => {
@@ -31,7 +36,7 @@ class ProductManagementPage extends React.Component {
                 products: response.data
             })
             
-            this.props.addProductAction(response.data[0])
+            //this.props.getProductAction()
         })
         .catch((err) => {
             console.log(err)
@@ -47,20 +52,36 @@ class ProductManagementPage extends React.Component {
 
 
     printData = () => {
-
-        return this.state.products.map((item,index) => {
+        let {page} = this.state
+        return this.state.products.slice(page > 1 ? (page - 1) * 5 : page - 1, page * 5).map((item,index) => {
             return (
                 <tr>
                     <td>{index + 1}</td>
                     <td>{item.nama}</td>
                     <td>{item.brand}</td>
                     <td>{item.kategori}</td>
-                    <td><img src={item.images[0]} width="100px" height="100px" alt="product" /></td>
+                    <td>{
+                            this.state.selectedIdx == index
+                            ?
+                            <img src={item.images[this.state.thumnailIdx]} width="150px" height="150px" alt="product" />
+                            :
+                            <img src={item.images[0]} width="150px" height="150px" alt="product" />
+                        }
+                        <div className="mt-2">
+                            {
+                                item.images.map((item,idx) => {
+                                    return <img src={item} width="10%" className="mr-2" alt={item.nama} onClick={() => this.setState({thumnailIdx: idx, selectedIdx: index})} />
+
+                                })
+                            }
+                        </div>
+                    </td>
                     <td>{item.harga}</td>
                     <td><Button type="button" color="info" style={{ color: "white" }} onClick={() => this.btDetail(index)} >Detail</Button> <Button type="button" color="danger" onClick={() => this.btDeleteProduct(index)}>Delete</Button></td>
                 </tr>
             )
         })
+        
 
     }
 
@@ -76,6 +97,29 @@ class ProductManagementPage extends React.Component {
         })
     }
 
+    // printBtPagination = () => {
+    //    let btn = []
+
+    //    for (let i = 0; i < Math.ceil(this.state.products.length / 8); i++) {
+           
+    //         btn.push(<Button outline color="primary" disabled={this.state.page == i + 1 ? true : false} onClick={() => this.setState({page: i + 1})}>{i +1}</Button>)
+           
+    //        return btn   
+    //    }
+    // }
+
+    printBtPagination = () => {
+        let btn = []
+        for (let i = 0; i < Math.ceil(this.state.products.length / 5); i++ ) {
+           btn.push(<Button outline color="primary" disabled={this.state.page == i + 1 ? true : false} onClick={() => this.setState({page: i + 1})}>{i+1}</Button>)
+        }
+
+        return btn
+
+    }
+
+    
+
     
 
     render() { 
@@ -90,6 +134,7 @@ class ProductManagementPage extends React.Component {
                     
                     modalAdd={this.state.modalAdd}
                     btClose={() => this.setState({ modalAdd: !this.state.modalAdd})}
+                    getData={this.getData}
                 />
                 <Row className="mt-4">
                     <Table>
@@ -107,8 +152,15 @@ class ProductManagementPage extends React.Component {
                         <tbody>
                             {this.printData()}
                         </tbody>
+                        <tfoot>
+                        </tfoot>
                     </Table>
                 </Row>
+                    <div className="my-5 text-center">
+                    <ButtonGroup>
+                        {this.printBtPagination()}
+                    </ButtonGroup>
+                    </div>
                 {
                     this.state.products.length > 0 && this.state.selectedIdx != null ? 
                     <ModalDetail
@@ -125,4 +177,4 @@ class ProductManagementPage extends React.Component {
 }
 
  
-export default connect(null,{addProductAction}) (ProductManagementPage);
+export default connect(null,{getProductAction}) (ProductManagementPage);

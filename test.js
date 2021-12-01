@@ -1,12 +1,13 @@
 let siswa = {nama:"alif",umur: 20}
 //console.log(siswa.length)
 
-let mhs = {
+let mhs =[ {
     nama: "ryan",
     umur: 22
-}
-//console.log(mhs)
+}, {
+    nama: "budi",
+    umur: 22
 
-mhs.nama = "boby"
-let newData = {...siswa}
-console.log(newData)
+}]
+console.log(mhs[1].umur)
+

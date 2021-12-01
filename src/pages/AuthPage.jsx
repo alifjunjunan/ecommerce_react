@@ -4,8 +4,7 @@ import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import { loginAction } from '../redux/action';
 import { connect } from 'react-redux';
 import {Navigate} from 'react-router-dom'
-
-const API_URL = "http://localhost:2000/akun";
+import { API_URL } from '../helper';
 
 class AuthPage extends React.Component {
     constructor(props) {
@@ -41,7 +40,7 @@ class AuthPage extends React.Component {
     }
     
     getData = () => {
-        axios.get(`http://localhost:2000/akun`)
+        axios.get(`${API_URL}/akun`)
         .then((response) => {
             //console.log(response.data)
             this.setState({
@@ -82,7 +81,7 @@ class AuthPage extends React.Component {
         } else {
             if (password == konfirPassword) {
                 if (email.includes("@")) {
-                    axios.post(`http://localhost:2000/akun`,{email,password,username,role: "user",status: "active"})
+                    axios.post(`${API_URL}/akun`,{email,password,username,role: "user",status: "active"})
                 .then((response) => {
                     this.getData()
                     this.setState({
@@ -123,31 +122,34 @@ class AuthPage extends React.Component {
 
     btLogin = () => {
     
-    let {loginEmail,loginPassword,akun} = this.state
+    // let {loginEmail,loginPassword,akun} = this.state
     
-    let dataLogin = akun.filter((item,index) => {
-        return item.email == loginEmail && item.password == loginPassword
-    })
+    // let dataLogin = akun.filter((item,index) => {
+    //     return item.email == loginEmail && item.password == loginPassword
+    // })
 
-    dataLogin.length != 0 && dataLogin[0].email == loginEmail && dataLogin[0].password == loginPassword ? axios.get(`http://localhost:2000/akun?email=${dataLogin[0].email}&id=${dataLogin[0].id}`)
-    .then((response) => {
-        this.getData()
-        this.setState({
-            loginEmail: "",
-            loginPassword: ""
-        })
-        localStorage.setItem("data", JSON.stringify(response.data[0]));
-        alert(`berhasil ! selamat datang ${dataLogin[0].username}`)
-        console.log("response login =>", response.data)
-        this.props.loginAction(response.data[0])
-    })
-    .catch((err) => {
-        console.log(err)
-    }) : alert(`data anda salah`)
-         this.setState({
-            loginEmail: "",
-            loginPassword: ""
-         })
+    // dataLogin.length != 0 && dataLogin[0].email == loginEmail && dataLogin[0].password == loginPassword ? axios.get(`${API_URL}/akun?email=${dataLogin[0].email}&id=${dataLogin[0].id}`)
+    // .then((response) => {
+    //     this.getData()
+    //     this.setState({
+    //         loginEmail: "",
+    //         loginPassword: ""
+    //     })
+    //     localStorage.setItem("data", JSON.stringify(response.data[0]));
+    //     alert(`berhasil ! selamat datang ${dataLogin[0].username}`)
+    //     console.log("response login =>", response.data)
+    //     this.props.loginAction(response.data[0])
+    // })
+    // .catch((err) => {
+    //     console.log(err)
+    // }) : alert(`data anda salah`)
+    //      this.setState({
+    //         loginEmail: "",
+    //         loginPassword: ""
+    //      })
+
+    this.props.loginAction(this.state.loginEmail, this.state.loginPassword)
+
     }
 
     showHidePasswordLogin = () => {

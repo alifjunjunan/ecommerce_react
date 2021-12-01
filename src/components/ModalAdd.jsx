@@ -139,24 +139,30 @@ class ModalAdd extends React.Component {
     }
 
     btSubmit = () => {
-        
+        Number(this.state.harga)
         let {nama,deskripsi,kategori,brand,harga,stock,images} = this.state
-        axios.post(`${API_URL}/products`,{nama,deskripsi,kategori,brand,harga,stock,images})
-        .then((response) => {
-            console.log(response.data)
-            this.setState({
-            nama: "",
-            deskripsi: "",
-            brand: "",
-            kategori: "",
-            harga: 0,
-            stock: [],
-            images: []
+        if (nama == "" || deskripsi == "" || kategori == "" || brand == "" || harga == 0 || stock.length == 0 || images.length == 0 ){
+            alert("lengkapi semua data")
+        } else {
+            axios.post(`${API_URL}/products`,{nama,deskripsi,kategori,brand,harga,stock,images})
+            .then((response) => {
+                console.log(response.data)
+                this.setState({
+                nama: "",
+                deskripsi: "",
+                brand: "",
+                kategori: "",
+                harga: 0,
+                stock: [],
+                images: []
+                })
+                this.props.getData()
             })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        }
     }
 
     

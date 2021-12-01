@@ -5,10 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { rootReducers } from './redux/reducers';
+import ReduxThunx from 'redux-thunk' 
 
-const globalStore = createStore(rootReducers) //membuat store / penyimpanan terpusat
+const globalStore = createStore(rootReducers,{}, applyMiddleware(ReduxThunx)) //membuat store / penyimpanan terpusat
 ReactDOM.render(
   <Provider store={globalStore}>
     <BrowserRouter>
