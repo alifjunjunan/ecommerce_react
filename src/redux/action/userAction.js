@@ -44,3 +44,28 @@ export const logoutAction = () => {
         type: "LOGOUT"
     }
 }
+
+export const updateUserCart = (iduser,data) => {
+    
+    return async (dispatch) => {
+        try {
+            
+            let response  = await axios.patch(`${API_URL}/akun/${iduser}`,{cart: data})
+
+            dispatch({
+                type: "UPDATE_CART_USER",
+                payload: response.data.cart
+            })
+
+            return {success: true, message: "add to cart success"}
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    // return {
+        // type: "UPDATE_CART_USER",
+        // payload: data
+    // }
+}

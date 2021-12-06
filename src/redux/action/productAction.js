@@ -46,21 +46,23 @@ export const sortProductAction = (sort=null) => {
     return async (dispatch) => {
         try {
            let response
-           if (sort) {
-                if(sort == "harga-asc") {
-                    response = await axios.get(`${API_URL}/products?_sort=harga&_order=asc`)
-                } else if (sort == "harga-desc") {
-                    response = await axios.get(`${API_URL}/products?_sort=harga&_order=desc`)
-                } else if (sort == "nama-asc") {
-                    response = await axios.get(`${API_URL}/products?_sort=nama&_order=asc`)
-                }else if (sort == "nama-desc") {
-                    response = await axios.get(`${API_URL}/products?_sort=nama&_order=desc`)
-                }else {
-                    response = await axios.get(`${API_URL}/products?_sort=id&_order=asc`)
-                }
-           } else {
-            response = await axios.get(`${API_URL}/products`)
-           }
+        //    if (sort) {
+        //         if(sort == "harga-asc") {
+        //             response = await axios.get(`${API_URL}/products?_sort=harga&_order=asc`)
+        //         } else if (sort == "harga-desc") {
+        //             response = await axios.get(`${API_URL}/products?_sort=harga&_order=desc`)
+        //         } else if (sort == "nama-asc") {
+        //             response = await axios.get(`${API_URL}/products?_sort=nama&_order=asc`)
+        //         }else if (sort == "nama-desc") {
+        //             response = await axios.get(`${API_URL}/products?_sort=nama&_order=desc`)
+        //         }else {
+        //             response = await axios.get(`${API_URL}/products?_sort=id&_order=asc`)
+        //         }
+        //    } else {
+        //     response = await axios.get(`${API_URL}/products`)
+        //    }
+
+            response = await axios.get(`${API_URL}/products?_sort=${sort.field}&_order=${sort.sortType}`)
 
             dispatch({
                 type: "GET_DATA_PRODUCTS",

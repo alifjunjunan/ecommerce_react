@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react'
 import { Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row,Button, ModalFooter } from 'reactstrap';
+import { connect } from 'react-redux';
+import { getProductAction } from '../redux/action';
 
 const API_URL = "http://localhost:2000"
 
@@ -110,7 +112,7 @@ class ModalAdd extends React.Component {
                         <Input type="text" placeholder="type" onChange={(event => this.handleInputStock(event.target.value,"type",index))} className="mb-2"/>
                     </Col>
                     <Col>
-                        <Input type="text" placeholder="stock" onChange={(event => this.handleInputStock(event.target.value,"qty",index))} className="mb-2" />
+                        <Input type="text" placeholder="stock" onChange={(event => this.handleInputStock(Number(event.target.value),"qty",index))} className="mb-2" />
                     </Col>
                     <Col>
                         <Button type="button" color="danger" className="mb-2" onClick={() => this.deleteStock(index)} outline>Delete</Button>
@@ -155,8 +157,12 @@ class ModalAdd extends React.Component {
                 harga: 0,
                 stock: [],
                 images: []
+                
                 })
+                this.props.getProductAction()
                 this.props.getData()
+                this.props.btClose()
+                
             })
             .catch((err) => {
                 console.log(err)
@@ -199,7 +205,7 @@ class ModalAdd extends React.Component {
                         </Row>
                         <FormGroup>
                             <Label>Harga Product</Label>
-                            <Input type="number" onChange={(event) => this.handleInput(event.target.value,"harga")} value={this.state.harga}/>
+                            <Input type="number" onChange={(event) => this.handleInput(Number(event.target.value),"harga")} value={this.state.harga}/>
                         </FormGroup>
                         <FormGroup>
                             <div className="d-flex justify-content-between">
@@ -229,4 +235,4 @@ class ModalAdd extends React.Component {
 
 
  
-export default ModalAdd;
+export default connect(null,{getProductAction}) (ModalAdd);

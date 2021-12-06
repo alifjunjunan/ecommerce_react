@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React from 'react'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, Collapse, Input,Toast,ToastBody,ToastHeader } from 'reactstrap';
 import {API_URL} from '../helper'
+import { updateUserCart } from '../redux/action';
+import { Navigate } from 'react-router-dom';
 
 class ProductDetail extends React.Component {
     constructor(props) {
@@ -13,6 +17,8 @@ class ProductDetail extends React.Component {
             qty: 1,
             selectedType: {},
             toastOpen: false,
+            toastMsg: "",
+            redirect: false
 
         }
     }
@@ -51,7 +57,8 @@ class ProductDetail extends React.Component {
             })
         }else {
             this.setState({
-                toastOpen: !this.state.toastOpen
+                toastOpen: !this.state.toastOpen,
+                toastMsg : "Melebihi Stock"
             })
         }
        }
@@ -68,19 +75,72 @@ class ProductDetail extends React.Component {
         }
     }
 
+    btAddCart = async () => {
+        let {selectedType,detail,qty} = this.state
+        if (selectedType.type) {
+            
+            let dataCart = {
+                images: detail.images[0],
+                nama: detail.nama,
+                brand: detail.brand,
+                harga: detail.harga,
+                type: selectedType.type,
+                qty   
+            }
+
+            //menggabungkan data cart sebelumnya dari reducer, dengan dataCart baru yang ditambahkan
+            let temp = [...this.props.cart]
+            temp.push(dataCart)
+
+            if (this.props.iduser) {
+                // axios.patch(`${API_URL}/akun/${this.props.iduser}`, {
+                //     cart: temp
+                // })
+                // .then((response) => {
+                //     console.log("data cart=>", response.data)
+                //     this.props.updateUserCart(response.data.cart)
+                // })
+                // .catch((err) => {
+                //     console.log(err)
+                // })
+                let response = await this.props.updateUserCart(this.props.iduser,temp)
+
+                if (response.success) {
+                    this.setState({
+                        redirect: true
+                    })
+                }
+
+            } else {
+                this.setState({
+                    toastOpen: !this.state.toastOpen, toastMsg: "silahkan Login terlebih dahulu"
+                })
+            }
+
+
+        }else {
+            this.setState({toastOpen: !this.state.toastOpen,
+            toastMsg: "pilih tipe produk dahulu"})
+        }
+    }
+    
+
     render() {
         // const search = this.props.location.search;
         // alert(search)
+        if (this.state.redirect) {
+            return <Navigate to="/cart-user"/>
+        }
         return (
             
            <div>
                 <div>
-                <Toast isOpen={this.state.toastOpen} style={{ position: "fixed" }}>
-                    <ToastHeader icon="warning" toggle={() => this.setState({toastOpen: false})}>
+                <Toast isOpen={this.state.toastOpen} style={{ position: "fixed",right: 10 }}>
+                    <ToastHeader icon="warning" toggle={() => this.setState({toastOpen: false,toastMsg: ""})}>
                             Add to cart Warning
                     </ToastHeader>
                     <ToastBody>
-                            Melebihi Stock
+                            {this.state.toastMsg}
                     </ToastBody>
                 </Toast>
                 </div>
@@ -135,7 +195,7 @@ class ProductDetail extends React.Component {
                                     </span>
                                 </span>
                             </div>
-                            <Button type="button" color="warning" style={{ width: '100%' }} >Add to cart</Button>
+                                <Button type="button" color="warning" style={{ width: '100%' }} onClick={this.btAddCart} >Add to cart</Button>
                         </div>
                     </>
                 }
@@ -145,4 +205,11 @@ class ProductDetail extends React.Component {
     }
 }
 
-export default ProductDetail;
+const mapToProps = (state) => {
+    return {
+        cart: state.userReducer.cart,
+        iduser: state.userReducer.id
+    }
+}
+
+export default connect(mapToProps,{updateUserCart}) (ProductDetail);

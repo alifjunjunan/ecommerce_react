@@ -12,6 +12,10 @@ import { loginAction,getProductAction } from './redux/action';
 import ProductPages from './pages/ProductPages';
 import ProductDetail from './pages/ProductDetail';
 import {API_URL} from './helper'
+import CartPage from './pages/CartPage';
+import NotFoundPage from './pages/NotFound';
+import HistoryPage from './pages/HistoryPage';
+import TransactionAdminPage from './pages/TransactionManagement';
 
 
 
@@ -46,7 +50,7 @@ class App extends React.Component {
         // })
   
         //console.log(local)
-  
+        // re-assign variable local dengan JSON parse
         local = JSON.parse(local)
         let res = await this.props.loginAction(local.email, local.password)
         if (res.success) {
@@ -75,17 +79,39 @@ class App extends React.Component {
   render() { 
     return ( 
       <div>
-        <NavbarComponent loading={this.state.loading}/>
+        <NavbarComponent  loading={this.state.loading}/>
         <Routes>
           <Route path="/" element={<HomePage/>} />
           <Route path="/auth-page" element={<AuthPage/>} />
-          <Route path="/product-management-page" element={<ProductManagementPage/>} />
-          <Route path="/products" element={<ProductPages/>} />
           <Route path="/product-detail" element={<ProductDetail/>} />
+          <Route path="/products" element={<ProductPages/>} />
+          {
+            this.props.role == "user"
+            ?
+            <>
+               <Route path="/cart-user" element={<CartPage/>} />
+               <Route path="/history-user" element={<HistoryPage/>} />
+            </>
+            : this.props.role == "admin" ?
+            <>
+               <Route path="/product-management-page" element={<ProductManagementPage/>} />
+               <Route path="/transaction-management-page" element={<TransactionAdminPage/>} />
+            </>
+            :
+            <Route path="*" element={<NotFoundPage/>} />
+          }
+
+          <Route path="*" element={<NotFoundPage/>} />
         </Routes>
       </div>
      );
   }
 }
+
+const mapToProps = (state) => {
+  return {
+      role : state.userReducer.role
+  }
+}
  
-export default connect(null,{loginAction, getProductAction}) (App);
+export default connect(mapToProps,{loginAction, getProductAction}) (App);

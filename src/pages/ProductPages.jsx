@@ -15,13 +15,13 @@ class ProductPages extends React.Component {
          }
     }
 
-    handleSelect = (event) => {
-        this.setState({
-            selectSort: event.target.value
-        })
+    // handleSelect = (event) => {
+    //     this.setState({
+    //         selectSort: event.target.value
+    //     })
 
-        console.log("isi select=>",this.state.selectSort)
-    }
+    //     console.log("isi select=>",this.state.selectSort)
+    // }
 
     printProduct = () => {
         let {page} = this.state
@@ -71,7 +71,15 @@ class ProductPages extends React.Component {
 
     btSort = () => {
         
-        this.props.sortProductAction(this.state.selectSort)
+       // this.props.sortProductAction(this.state.selectSort)
+       
+    }
+
+    handleSort = (event) => {
+        this.props.sortProductAction({
+            field: event.target.value.split('-')[0],
+            sortType: event.target.value.split('-')[1]
+        })
     }
 
     render() { 
@@ -115,7 +123,7 @@ class ProductPages extends React.Component {
                         <FormGroup>
                             <Label>Sort</Label>
                             <InputGroup>
-                                <Input type="select" value={this.state.selectSort} onChange={this.handleSelect}>
+                                <Input type="select" onChange={this.handleSort}>
                                     <option value="harga-asc">Harga Asc</option>
                                     <option value="harga-desc">Harga Desc</option>
                                     <option value="nama-asc">A-Z</option>

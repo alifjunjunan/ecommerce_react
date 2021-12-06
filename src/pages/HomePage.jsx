@@ -12,24 +12,6 @@ class HomePage extends React.Component {
          }
     }
 
-    componentDidMount() {
-        this.getData()
-        
-    }
-
-    getData=() => {
-        axios.get(`${API_URL}/products`)
-        .then((response) => {
-            this.setState({
-                products: response.data
-            })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
-
-   
 
     render() { 
         return ( 
@@ -55,7 +37,9 @@ class HomePage extends React.Component {
                         <span className="sr-only">Next</span>
                     </button>
                 </div>
-                <div className="container mt-5">
+                {
+                    this.props.productList.length > 0 && 
+                    <div className="container mt-5">
                     <div className="row">
                         <div className="col-md-6 order-xl-0 order-md-0  order-sm-1 order-1 text-center">
                             <img width="90%" height="90%" className="shadow bg-white mb-5 rounded" src={this.props.productList[11].images[0]} alt="" />
@@ -78,15 +62,16 @@ class HomePage extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-6 text-center order-xl-0 order-md-0 order-sm-1 order-1" style={{ margin: "auto" }}>
-                            <img width="90%" height="90%" className="shadow bg-white mb-5 rounded" src={this.props.productList[13].images[0]} alt="" />
+                            <img width="90%" height="90%" className="shadow bg-white mb-5 rounded" src={this.props.productList[4].images[0]} alt="" />
                         </div>
                         <div className="col-md-6 order-xl-1 order-md-1 order-sm-0 order-0" >
-                            <h3>{this.props.productList[13].nama}</h3>
-                            <h4>{this.props.productList[13].brand} | {this.props.productList[13].kategori}</h4>
-                            <p style={{ textAlign: "justify" }}>{this.props.productList[13].deskripsi}</p>
+                            <h3>{this.props.productList[4].nama}</h3>
+                            <h4>{this.props.productList[4].brand} | {this.props.productList[4].kategori}</h4>
+                            <p style={{ textAlign: "justify" }}>{this.props.productList[4].deskripsi}</p>
                         </div>
                     </div>
                 </div>
+                }
             </div>
          );
     }

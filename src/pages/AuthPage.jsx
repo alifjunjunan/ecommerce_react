@@ -81,7 +81,7 @@ class AuthPage extends React.Component {
         } else {
             if (password == konfirPassword) {
                 if (email.includes("@")) {
-                    axios.post(`${API_URL}/akun`,{email,password,username,role: "user",status: "active"})
+                    axios.post(`${API_URL}/akun`,{email,password,username,role: "user",status: "active",cart: []})
                 .then((response) => {
                     this.getData()
                     this.setState({
@@ -95,10 +95,10 @@ class AuthPage extends React.Component {
                         toastmessage: "registrasi berhasil"
                     })
                     
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
                 } else {
                     this.setState({
                         toastOpen: true,
@@ -165,6 +165,20 @@ class AuthPage extends React.Component {
             })
         }
     }
+
+    showHidePasswordRegis = () => {
+        if (this.state.regPassType == "password") {
+            this.setState({
+                regPassShow: "Hide",
+                regPassType: "text"
+            })
+        } else {
+            this.setState({
+                regPassShow: "Show",
+                regPassType: "password"
+            })
+        }
+    }
     
     render() { 
         if (this.props.iduser) {
@@ -222,9 +236,12 @@ class AuthPage extends React.Component {
                                         <label htmlFor="email">Email</label>
                                         <input type="email" className="form-control" onChange={(event) => this.handleInput(event.target.value,"email")} value={this.state.email}/>
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password" className="form-control" onChange={(event) => this.handleInput(event.target.value,"password")} value={this.state.password} />
+                                    <label htmlFor="password">Password</label>
+                                    <div className="input-group">
+                                        <input type={this.state.regPassType} className="form-control" onChange={(event) => this.handleInput(event.target.value,"password")} value={this.state.password} />
+                                        <div className="input-group-append">
+                                            <span className="input-group-text" style={{ cursor: "pointer" }} onClick={this.showHidePasswordRegis}>{this.state.regPassShow}</span>
+                                        </div>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="passwordConfirmation">Confirmation Password</label>

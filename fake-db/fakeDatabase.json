@@ -6,7 +6,17 @@
       "username": "admin-01",
       "role": "admin",
       "status": "active",
-      "id": 1
+      "id": 1,
+      "cart": [
+        {
+          "images": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_tinKQVRUbIflUjduaDjKpeZbipvxICvFYQ&usqp=CAU",
+          "nama": "KAOS UNIQLO X KAWS",
+          "brand": "Uniqlo",
+          "harga": 250000,
+          "type": "M",
+          "qty": 1
+        }
+      ]
     },
     {
       "email": "baby@gmail.com",
@@ -14,7 +24,8 @@
       "username": "lil_baby",
       "role": "user",
       "status": "active",
-      "id": 2
+      "id": 2,
+      "cart": []
     },
     {
       "email": "bio@gmail.com",
@@ -22,7 +33,20 @@
       "username": "bio.data",
       "role": "user",
       "status": "active",
-      "id": 3
+      "id": 3,
+      "cart": [],
+      "data": {
+        "cart": [
+          {
+            "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810720_PE771385_S4.jpg",
+            "nama": "IDALINNEA D",
+            "brand": "IKEA",
+            "harga": 79000,
+            "type": "L",
+            "qty": 2
+          }
+        ]
+      }
     },
     {
       "email": "birkin@gmail.com",
@@ -30,7 +54,8 @@
       "username": "birkin_bag",
       "role": "user",
       "status": "active",
-      "id": 4
+      "id": 4,
+      "cart": []
     },
     {
       "email": "user5@gmail.com",
@@ -38,7 +63,8 @@
       "username": "user5",
       "role": "user",
       "status": "active",
-      "id": 5
+      "id": 5,
+      "cart": []
     },
     {
       "email": "user6@gmail.com",
@@ -46,7 +72,8 @@
       "username": "user6",
       "role": "user",
       "status": "active",
-      "id": 6
+      "id": 6,
+      "cart": []
     }
   ],
   "products": [
@@ -75,31 +102,28 @@
       "id": 1
     },
     {
-      "nama": "KAOS UNIQLO X KAWS",
-      "deskripsi": "Kaos premium",
-      "kategori": "Kaos",
-      "brand": "Uniqlo",
-      "harga": 200000,
+      "nama": "HAUGA V.2",
+      "brand": "Mr. DYI",
+      "deskripsi": "Mudah untuk menyembunyikan kabel dan stopkontak tapi tetap dapat dijangkau dengan jalur kabel di bagian belakang.",
+      "kategori": "Perabotan",
+      "harga": 1200000,
       "stock": [
         {
           "id": null,
-          "type": "M",
-          "qty": "5"
+          "type": "Black",
+          "qty": 5
         },
         {
           "id": null,
-          "type": "L",
-          "qty": "4"
-        },
-        {
-          "id": null,
-          "type": "Xl",
-          "qty": "2"
+          "type": "White",
+          "qty": 10
         }
       ],
       "images": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_tinKQVRUbIflUjduaDjKpeZbipvxICvFYQ&usqp=CAU",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBgl5YK1Gq621i5L2NrPqCT6JJIV7uB9HD8A&usqp=CAU"
+        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955765_PE804101_S4.jpg",
+        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/594/0959497_PE806037_S4.jpg",
+        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/727/0972709_PE811745_S4.jpg",
+        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955706_PE803970_S4.jpg"
       ],
       "id": 2
     },
@@ -128,25 +152,27 @@
       "id": 3
     },
     {
-      "nama": "IDANÄS",
+      "nama": "Ranjang Kayu",
       "deskripsi": " Anda dapat dengan mudah menyedot debu di bawah rangka tempat tidur untuk menjaga ruang tetap bersih dan bebas debu.  Ada banyak ruang di bawah tempat tidur untuk kotak penyimpanan sehingga sempurna untuk menyimpan selimut dan bantal tambahan.  Sisi tempat tidur dapat disesuaikan memungkinkan Anda untuk menggunakan kasur dengan ketebalan yang berbeda.  Veneer kayu memberi Anda tampilan, rasa dan keindahan yang sama seperti kayu solid dengan variasi unik dalam serat, warna, dan tekstur.",
-      "brand": "IKEA",
+      "brand": "DIY",
       "kategori": "Rangka tempat tidur",
-      "harga": 5499000,
+      "harga": 3500000,
       "stock": [
         {
           "id": null,
-          "type": "White",
-          "qty": 5
+          "type": "Cream",
+          "qty": 5,
+          "stock": 25
         },
         {
           "id": null,
           "type": "Black",
-          "qty": 10
+          "qty": 10,
+          "stock": 20
         }
       ],
       "images": [
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/160/0916066_PE784942_S4.jpg",
+        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/391/0939185_PE794439_S4.jpg",
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/323/0932344_PE791460_S4.jpg",
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/391/0939185_PE794439_S4.jpg"
       ],
@@ -375,55 +401,37 @@
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/938/0893875_PE718921_S4.jpg"
       ],
       "id": 13
-    },
+    }
+  ],
+  "userTransactions": [
     {
-      "nama": "VITLÖK B",
-      "deskripsi": "Pot tanaman digalvanis agar terlindung dari karat.",
-      "brand": "IKEA",
-      "kategori": "Kotak bunga dengan penyangga",
-      "harga": 299000,
-      "stock": [
+      "iduser": 3,
+      "username": "bio.data",
+      "invoice": "#INV/1638778639318",
+      "date": "6/12/2021 15.17.19",
+      "note": "pakai buble wrap",
+      "totalPayment": 1458000,
+      "ongkir": 100000,
+      "detail": [
         {
-          "id": null,
-          "type": "Type-1",
-          "qty": 12
-        },
-        {
-          "id": null,
-          "type": "Type-2",
-          "qty": 13
-        }
-      ],
-      "images": [
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954178_PE804201_S4.jpg",
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954177_PE804200_S4.jpg",
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954179_PE804202_S4.jpg"
-      ],
-      "id": 14
-    },
-    {
-      "nama": "IDALINNEA D",
-      "deskripsi": " Ritsleting yang tersembunyi membuat sarung mudah dilepas.  Sarung bantal dengan tampilan cermin karena memiliki pola yang sama di kedua sisi.  Katun adalah bahan alami lembut dan mudah dirawat yang dapat Anda cuci dengan mesin.",
-      "brand": "IKEA",
-      "kategori": "Perabotan",
-      "harga": 45000,
-      "stock": [
-        {
-          "id": null,
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810720_PE771385_S4.jpg",
+          "nama": "IDALINNEA D",
+          "brand": "IKEA",
+          "harga": 79000,
           "type": "M",
-          "qty": 10
+          "qty": 2
         },
         {
-          "id": null,
-          "type": "L",
-          "qty": 12
+          "images": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955765_PE804101_S4.jpg",
+          "nama": "HAUGA V.2",
+          "brand": "Mr. DYI",
+          "harga": 1200000,
+          "type": "Black",
+          "qty": 1
         }
       ],
-      "images": [
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810720_PE771385_S4.jpg",
-        "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/107/0810719_PE771386_S4.jpg"
-      ],
-      "id": 15
+      "status": "Menunggu Konfirmasi",
+      "id": 1
     }
   ]
 }
